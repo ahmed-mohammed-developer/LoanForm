@@ -1,5 +1,6 @@
 import './LoanForm.css'
 import Modal from './Modal';
+import { useState } from 'react';
 
 export default function LoanForm() {
     return(
@@ -33,7 +34,7 @@ export default function LoanForm() {
                 <button>Submit</button>
 
             </form>
-            <Modal />
+            {/*<Modal />*/}
         </div>
     )
 }
