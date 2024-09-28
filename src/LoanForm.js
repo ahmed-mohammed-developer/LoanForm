@@ -1,6 +1,8 @@
 import './LoanForm.css'
 import Modal from './Modal';
 import { useState } from 'react';
+import MyComp from './MyComp';
+import {LoanInputContets} from './contexts/LornFormInputContext'
 
 
 
@@ -43,6 +45,10 @@ export default function LoanForm() {
         }
     }
 
+    function handlePhoneNumberInputChange(value ){
+        setLoanInputs({...loanInputs, phoneNumber: value})
+    }
+
     return(
         <div
         onClick={handleDivClick}
@@ -60,13 +66,11 @@ export default function LoanForm() {
                 />
 
 
-                <label>Phone Number</label>
-                <input
-                  value={loanInputs.phoneNumber}
-                  onChange={(event) => {
-                      setLoanInputs({...loanInputs, phoneNumber: event.target.value})
-                  }}
-                />
+
+                {/*<MyComp handleChange={handlePhoneNumberInputChange} value={loanInputs.phoneNumber} inputName="Phone Number"/>*/}
+               <LoanInputContets.Provider>
+               <MyComp />
+               </LoanInputContets.Provider>
 
 
                 <label>Age</label>
