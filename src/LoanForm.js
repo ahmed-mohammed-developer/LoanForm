@@ -8,6 +8,8 @@ import { useState } from 'react';
 
 
 export default function LoanForm() {
+    const [errorMessage, setErrorMessage] = useState(null)
+    const [showModale, setshowModale] = useState(false);
     const [loanInputs, setLoanInputs] = useState({
         name: '',
         phoneNumber: '',
@@ -17,9 +19,34 @@ export default function LoanForm() {
     })
 
 
+    function handleFormSubmit (event){
+        event.preventDefault()
+        setErrorMessage(null)
+        const {age, phoneNumber} = loanInputs
+        if(age < 18 || age > 70){
+            setErrorMessage("The age ids not allowed")
+        } else if (phoneNumber.length < 10 || phoneNumber.length > 12){
+            setErrorMessage("Phone Number Is Coorect")
+        }
+        setshowModale(true)
+    }
+
+    const btnIsDisabled = 
+    loanInputs.name === "" ||
+    loanInputs.age === "" ||
+    loanInputs.phoneNumber === "";
+
+    function handleDivClick (){
+        if (showModale)
+        {
+            setshowModale(false)
+        }
+    }
 
     return(
-        <div className='LoanForm'>
+        <div
+        onClick={handleDivClick}
+         className='LoanForm'>
             <form className='forms'>
                 <h1>Requesting a LoanForm</h1>
                 <hr></hr>
@@ -71,13 +98,13 @@ export default function LoanForm() {
                 </select>
 
                 <button
-                className=''
+                className={btnIsDisabled ? "disabled" : ""}
                 onClick={handleFormSubmit}
                 disabled={btnIsDisabled}
                 >Submit</button>
 
             </form>
-            {/*<Modal />*/}
+            <Modal errorMessage={errorMessage} isVisible={showModale}/>
         </div>
     )
 }
