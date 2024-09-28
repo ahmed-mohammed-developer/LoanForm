@@ -3,6 +3,8 @@ import Modal from './Modal';
 import { useState } from 'react';
 import MyComp from './MyComp';
 import {LoanInputContets} from './contexts/LornFormInputContext'
+import { useContext } from 'react';
+import { UserContext } from './contexts/UserContext';
 
 
 
@@ -10,10 +12,13 @@ import {LoanInputContets} from './contexts/LornFormInputContext'
 
 
 export default function LoanForm() {
+    const userData = useContext(UserContext)
     const [errorMessage, setErrorMessage] = useState(null)
     const [showModale, setshowModale] = useState(false);
+
+    const initialName = userData.name
     const [loanInputs, setLoanInputs] = useState({
-        name: '',
+        name: initialName,
         phoneNumber: '',
         age: '',
         isEmplye: false,
@@ -53,6 +58,7 @@ export default function LoanForm() {
         <div
         onClick={handleDivClick}
          className='LoanForm'>
+            <h1>{userData.name}</h1>
             <form className='forms'>
                 <h1>Requesting a LoanForm</h1>
                 <hr></hr>
@@ -68,7 +74,13 @@ export default function LoanForm() {
 
 
                 {/*<MyComp handleChange={handlePhoneNumberInputChange} value={loanInputs.phoneNumber} inputName="Phone Number"/>*/}
-               <LoanInputContets.Provider>
+               <LoanInputContets.Provider
+               value={{
+                value: loanInputs.phoneNumber,
+                 handeleChange: handlePhoneNumberInputChange,
+                labeTitle: "Phone Number",
+                }}
+               >
                <MyComp />
                </LoanInputContets.Provider>
 
